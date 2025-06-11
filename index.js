@@ -43,6 +43,21 @@ app.post("/department", async (req, res) => {
     res.status(500).json({ message: "Failed to add department" });
   }
 });
+app.post("/employee", async (req, res) => {
+  try {
+    const { name, managerId, title, departmentId } = req.body;
+    const employee = await Employees.create({
+      name,
+      managerId,
+      title,
+      departmentId,
+    });
+    res.status(201).json(employee);
+  } catch (error) {
+    console.log("failed to add employee: ", error);
+    res.status(500).json({ message: "Failed to add employee" });
+  }
+});
 
 const initApp = async () => {
   console.log("Testing db connection");
