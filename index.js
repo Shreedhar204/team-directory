@@ -4,6 +4,7 @@ const PORT = 8081;
 const db = require("./db");
 const { Department } = require("./models/models");
 const Employees = require("./models/employeeModel");
+const { Op } = require("sequelize");
 
 app.use(express.json());
 
@@ -56,6 +57,18 @@ app.post("/employee", async (req, res) => {
   } catch (error) {
     console.log("failed to add employee: ", error);
     res.status(500).json({ message: "Failed to add employee" });
+  }
+});
+app.get("/employee/search", async (req, res) => {
+  try {
+    const { name } = req.query;
+    console.log(req.params);
+    const employees = await Employees.findAll({
+      where: { name: { [Op.like]: `%${name}%` } },
+    });
+    res.json(employees);
+  } catch (error) {
+    console.log("failed to find employee: ", error);
   }
 });
 
