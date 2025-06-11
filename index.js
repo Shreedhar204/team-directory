@@ -2,13 +2,8 @@ const express = require("express");
 const app = express();
 const PORT = 8081;
 const db = require("./db");
-const {
-  getAllDepartments,
-  getAllEmployees,
-  addDepartment,
-} = require("./controller");
 const { Department } = require("./models/models");
-// import { Department } from "./models";
+const Employees = require("./models/employeeModel");
 
 app.use(express.json());
 
@@ -17,24 +12,25 @@ app.get("/", (req, res) => {
 });
 
 app.get("/departments", async (req, res) => {
-  const departments = await getAllDepartments();
-  const plainDepartments = departments.map((dept) => dept.toJSON());
-  console.log({ plainDepartments });
-  res.json(
-    { test: departments }
-    // Department.findAll()
-    //   .then((result) => {
-    //     return json(result);
-    //   })
-    //   .catch((error) => {
-    //     return { message: "Unable to fetch" };
-    //   })
-  );
+  try {
+    const departments = await Department.findAll({
+      attributes: ["id", "name"],
+    });
+    res.json({ departments });
+  } catch (error) {
+    console.log("failed to fetch: ", error);
+  }
 });
 
 app.get("/employees", async (req, res) => {
-  const employees = await getAllEmployees();
-  res.json({ employees });
+  try {
+    const employees = await Employees.findAll({
+      attributes: ["id", "managerId", "name", "title", "departmentId"],
+    });
+    res.json({ employees });
+  } catch (error) {
+    console.log("failed to fetch: ", error);
+  }
 });
 
 app.post("/department", async (req, res) => {
