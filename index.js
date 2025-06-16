@@ -2,15 +2,15 @@ const express = require("express");
 const app = express();
 const PORT = 8081;
 const db = require("./db");
-const { Department } = require("./models/models");
+const Departments = require("./models/departmentModel");
 const Employees = require("./models/employeeModel");
 const { Op, QueryTypes } = require("sequelize");
 const sequelize = require("./db");
 
 app.use(express.json());
 
-Employees.belongsTo(Department, { foreignKey: "departmentId" });
-Department.hasMany(Employees, { foreignKey: "departmentId" });
+Employees.belongsTo(Departments, { foreignKey: "departmentId" });
+Departments.hasMany(Employees, { foreignKey: "departmentId" });
 
 app.get("/", (req, res) => {
   res.send("hello there");
@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 
 app.get("/departments", async (req, res) => {
   try {
-    const departments = await Department.findAll({
+    const departments = await Departments.findAll({
       attributes: ["id", "name"],
     });
     res.json({ departments });
@@ -43,7 +43,7 @@ app.get("/employees", async (req, res) => {
 app.post("/department", async (req, res) => {
   try {
     const { name } = req.body;
-    const department = await Department.create({ name });
+    const department = await Departments.create({ name });
     res.status(201).json(department);
   } catch (error) {
     console.log("failed to add department: ", error);
@@ -72,7 +72,7 @@ app.get("/employee/search", async (req, res) => {
       where: { name: { [Op.like]: `%${name}%` }, title: title },
       include: [
         {
-          model: Department,
+          model: Departments,
           where: { name: department },
         },
       ],

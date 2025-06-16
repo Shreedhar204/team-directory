@@ -17,7 +17,6 @@ const Employees = sequelize.define(
       },
       allowNull: true,
       defaultValue: null,
-      // autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,
@@ -31,7 +30,6 @@ const Employees = sequelize.define(
     },
     departmentId: {
       type: DataTypes.INTEGER,
-      // autoIncrement: true,
     },
   },
   { timestamps: false }

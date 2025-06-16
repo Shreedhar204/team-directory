@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
 
-const Department = sequelize.define(
-  "Department",
+const Departments = sequelize.define(
+  "Departments",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -16,6 +16,6 @@ const Department = sequelize.define(
   },
   { timestamps: false }
 );
-console.log(Department === sequelize.models.Department);
+console.log(Departments === sequelize.models.Department);
 
-module.exports = { Department };
+module.exports = Departments;
