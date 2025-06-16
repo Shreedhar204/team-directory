@@ -8,6 +8,9 @@ const { Op } = require("sequelize");
 
 app.use(express.json());
 
+Employees.belongsTo(Department, { foreignKey: "departmentId" });
+Department.hasMany(Employees, { foreignKey: "departmentId" });
+
 app.get("/", (req, res) => {
   res.send("hello there");
 });
@@ -61,10 +64,15 @@ app.post("/employee", async (req, res) => {
 });
 app.get("/employee/search", async (req, res) => {
   try {
-    const { name } = req.query;
-    console.log(req.params);
+    const { name, title, department } = req.query;
     const employees = await Employees.findAll({
-      where: { name: { [Op.like]: `%${name}%` } },
+      where: { name: { [Op.like]: `%${name}%` }, title: title },
+      include: [
+        {
+          model: Department,
+          where: { name: department },
+        },
+      ],
     });
     res.json(employees);
   } catch (error) {
