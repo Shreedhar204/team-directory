@@ -4,7 +4,8 @@ const PORT = 8081;
 const db = require("./db");
 const { Department } = require("./models/models");
 const Employees = require("./models/employeeModel");
-const { Op } = require("sequelize");
+const { Op, QueryTypes } = require("sequelize");
+const sequelize = require("./db");
 
 app.use(express.json());
 
@@ -75,6 +76,45 @@ app.get("/employee/search", async (req, res) => {
       ],
     });
     res.json(employees);
+  } catch (error) {
+    console.log("failed to find employee: ", error);
+  }
+});
+
+app.get("/employees/heirarchy/:employeeId", async (req, res) => {
+  try {
+    const { employeeId } = req.params;
+    const employeeHeirarchy = await sequelize.query(
+      `
+      WITH RECURSIVE cte AS (
+        SELECT id, name, title, managerId, 1 AS level
+        FROM Employees
+        WHERE managerId = :employeeId
+
+        UNION
+
+        SELECT a.id, a.name, a.title, a.managerId, b.level + 1
+        FROM Employees a
+        INNER JOIN cte b ON a.managerId = b.id
+      )
+      SELECT 
+        a.name AS manager,
+        b.name, b.title, b.level
+      FROM Employees a
+      INNER JOIN cte b ON a.id = :employeeId;
+      `,
+      {
+        replacements: { employeeId },
+        type: QueryTypes.SELECT,
+      }
+    );
+    const managerName = employeeHeirarchy[0].manager;
+    const team = employeeHeirarchy.map(({ name, title, level }) => ({
+      name,
+      title,
+      level,
+    }));
+    res.json({ manager: managerName, team });
   } catch (error) {
     console.log("failed to find employee: ", error);
   }
