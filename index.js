@@ -24,6 +24,7 @@ app.get("/departments", async (req, res) => {
     res.json({ departments });
   } catch (error) {
     console.log("failed to fetch: ", error);
+    res.status(500).json({ message: "Failed to fetch departments" });
   }
 });
 
@@ -35,6 +36,7 @@ app.get("/employees", async (req, res) => {
     res.json({ employees });
   } catch (error) {
     console.log("failed to fetch: ", error);
+    res.status(500).json({ message: "Failed to fetch employees" });
   }
 });
 
@@ -78,6 +80,7 @@ app.get("/employee/search", async (req, res) => {
     res.json(employees);
   } catch (error) {
     console.log("failed to find employee: ", error);
+    res.status(500).json({ message: "Failed to find employee" });
   }
 });
 
@@ -117,6 +120,7 @@ app.get("/employees/heirarchy/:employeeId", async (req, res) => {
     res.json({ manager: managerName, team });
   } catch (error) {
     console.log("failed to find employee: ", error);
+    res.status(500).json({ message: "Failed to fetch hierarchy" });
   }
 });
 
