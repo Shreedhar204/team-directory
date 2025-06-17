@@ -6,7 +6,6 @@ This is a RESTful API built with Node.js, Express, and MySQL using Sequelize ORM
 
 * RESTful API using Express.js
 * Sequelize ORM with MySQL database
-* Clean project structure for easy maintenance
 * Nodemon configured for development
 
 ## Getting Started
