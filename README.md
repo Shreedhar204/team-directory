@@ -82,14 +82,6 @@ node .
 | GET    | `/employees/search` | Search for employee by name, title and department |
 | GET | `/employees/heirarchy/:employeeId` | Get team hierarchy by employee id |
 
-### Sample Request Body for POST / PUT:
-
-```json
-{
-  "name": "John Doe",
-  "position": "Software Engineer"
-}
-```
 
 ## Technologies Used
 
