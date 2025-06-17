@@ -14,7 +14,8 @@ This is a RESTful API built with Node.js, Express, and MySQL using Sequelize ORM
 https://shreedhar-402330.postman.co/workspace/Shreedhar's-Workspace~836c7bc7-4d3c-4670-84cc-7cd3c92978f7/collection/45801604-ce843ad0-5193-4020-8e43-6d6a874710d4?action=share&creator=45801604
 
 ## Database schema
-<img width="1023" alt="image" src="https://github.com/user-attachments/assets/385fd2aa-5eb0-4c04-b5c2-fcfbf7b3f774" />
+<img width="1125" alt="image" src="https://github.com/user-attachments/assets/eec61914-63f8-4c62-be10-f10554688ddb" />
+
 
 ## Table scripts
 Departments
