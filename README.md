@@ -1,6 +1,6 @@
 # Coding Challenge REST API
 
-This is a RESTful API built with Node.js, Express, and MySQL using Sequelize ORM. It provides endpoints for managing employee records — including creating, retrieving, updating, and deleting employee data.
+This is a RESTful API built with Node.js, Express, and MySQL using Sequelize ORM. It provides endpoints for managing employee records — including creating and retrieving employee data.
 
 ## Features
 
